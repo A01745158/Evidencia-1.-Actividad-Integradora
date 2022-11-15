@@ -17,7 +17,9 @@ def agent_portrayal(agent):
                      "Filled": "true",
                      "Color": "rgb(146, 90, 55)",
                      "r": 0.4,
-                     "Layer": 1}
+                     "Layer": 1,
+                     "text": agent.unique_id,
+                     "text_color": "white"}
             
     elif isinstance(agent, Box):
         # if the agent is a box, placed correctly and its stack size is 5, return a blue rectangle

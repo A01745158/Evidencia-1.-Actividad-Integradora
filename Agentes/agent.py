@@ -47,7 +47,11 @@ class Robot(Agent):
             if self.get_neighboor_box_position() is not None:
                 self.pick_box()
             else:
-                # Move randomly until it finds a box to move while not colliding with anything
+                self.move_randomly()
+                
+                    
+    def move_randomly(self):
+        # Move randomly until it finds a box to move while not colliding with anything
                 possible_positions = self.model.grid.get_neighborhood(self.pos, moore=False, include_center=False)
                 if len(possible_positions) > 0:
                     # make copy of possible_positions to avoid changing the original list
@@ -84,8 +88,6 @@ class Robot(Agent):
                 # if there are no possible positions, return and do nothing
                 self.model.grid.move_agent(self, (self.pos[0], self.pos[1]))
                 return
-                    
-                # If there was a possible position to move, move to it, else stay in the same position
 
     def get_neighboor_box_position(self):
         """Searches its neighborhood for a box and returns its position if it exists
@@ -127,7 +129,26 @@ class Robot(Agent):
                 self.box = None
                 return
         
-        last_x_position = self.model.get_last_x_position()
+
+        if self.pos[0] < ideal_position[0]:
+            self.move_with_box(self.pos[0] + 1, self.pos[1])
+            self.model.movements += 1
+        
+        elif self.pos[0] > ideal_position[0]:
+            self.move_with_box(self.pos[0] - 1, self.pos[1])
+            self.model.movements += 1
+
+        elif self.pos[1] < ideal_position[1]:
+            self.move_with_box(self.pos[0], self.pos[1] + 1)
+            self.model.movements += 1
+        
+        elif self.pos[1] > ideal_position[1]:
+            self.move_with_box(self.pos[0], self.pos[1] - 1)
+            self.model.movements += 1
+        
+        else:
+            self.move_with_box(self.pos[0], self.pos[1])
+        """last_x_position = self.model.get_last_x_position()
         # Moves all the robot all the way to the right
         if self.pos[0] < last_x_position and self.pos[1] != ideal_position[1]:
             self.move_with_box(self.pos[0] + 1, self.pos[1])
@@ -149,7 +170,7 @@ class Robot(Agent):
                         return
 
             self.move_with_box(self.pos[0] - 1, self.pos[1])
-            return
+            return"""
 
     def move_with_box(self, x, y):
         """
