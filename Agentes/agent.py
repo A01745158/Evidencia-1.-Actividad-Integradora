@@ -130,21 +130,7 @@ class Robot(Agent):
                 return
         
 
-        if self.pos[0] < ideal_position[0]:
-            self.move_with_box(self.pos[0] + 1, self.pos[1])
-            self.model.movements += 1
         
-        elif self.pos[0] > ideal_position[0]:
-            self.move_with_box(self.pos[0] - 1, self.pos[1])
-            self.model.movements += 1
-
-        elif self.pos[1] < ideal_position[1]:
-            self.move_with_box(self.pos[0], self.pos[1] + 1)
-            self.model.movements += 1
-        
-        elif self.pos[1] > ideal_position[1]:
-            self.move_with_box(self.pos[0], self.pos[1] - 1)
-            self.model.movements += 1
         
         else:
             self.move_with_box(self.pos[0], self.pos[1])
