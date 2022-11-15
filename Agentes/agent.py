@@ -203,5 +203,10 @@ class Box(Agent):
         self.get_number_of_boxes_in_stack()
 
     def get_number_of_boxes_in_stack(self):
-        
+        """
+        Get the number of boxes in the stack
+
+        Returns:
+            int: the number of boxes in the stack
+        """
         return len(self.model.grid.get_cell_list_contents([self.pos]))
