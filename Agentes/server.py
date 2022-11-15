@@ -7,7 +7,7 @@ from model import Robot, Box
 GRID_WIDTH = 15
 GRID_HEIGHT = 15
 
-MAX_STEPS = 1000
+MAX_STEPS = 10000
 NUMBER_OF_BOXES = 30
 
 def agent_portrayal(agent):

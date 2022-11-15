@@ -1,5 +1,10 @@
 from mesa import Agent
 
+
+# Idea para memoria si es permitido, cada vez que un robot pase por una caja cuando esté en camino a dejar una caja que ya lleva cargando
+# entonces le va a agregar a un diccionario en el robot de las coordenadas de la caja y se le asigna a un robot aleatorio para que pueda ir por ella directamente
+# en vez de tener que buscarla. Se puede utilizar el unique_id del robot para identificarlo en el diccionario. El diccionario tendría {unique_id: [coordenadas]}.
+# Se implementaria en move(), que si existe un valor de coordenada en su unique_id en el diccionario, entonces se mueve a esa coordenada y se elimina el valor del diccionario cuando la recoge.
 class Robot(Agent):
     """ 
     A robot agent that can pick up boxes and place them in the right position
@@ -30,6 +35,7 @@ class Robot(Agent):
 
         self.move()
 
+
     def move(self):
         """
         Move the robot randomly until it finds a box to pick it up, then move it to the ideal position until it leaves the box to the ideal position.
@@ -41,13 +47,45 @@ class Robot(Agent):
             if self.get_neighboor_box_position() is not None:
                 self.pick_box()
             else:
-                # Move randomly until it finds a box to move
+                # Move randomly until it finds a box to move while not colliding with anything
                 possible_positions = self.model.grid.get_neighborhood(self.pos, moore=False, include_center=False)
-                new_position = self.random.choice(possible_positions)
-                while new_position in self.model.all_stacking_positions:
-                    new_position = self.random.choice(possible_positions)
-                self.model.grid.move_agent(self, new_position)
-                self.model.movements += 1
+                if len(possible_positions) > 0:
+                    # make copy of possible_positions to avoid changing the original list
+                    possible_positions_copy = possible_positions.copy()
+                    # select a random position from the possible positions
+                    new_position = self.random.choice(possible_positions_copy)
+                    
+                    # get a new position until it is a position that is not a stacked box location
+                    while new_position in self.model.all_stacking_positions:
+                        # if there are non, return
+                        if len(possible_positions_copy) == 0:
+                            return
+                        new_position = self.random.choice(possible_positions_copy)
+                    
+                    # iterate until a viable position is found, is none is found stay in the same position
+                    while len(self.model.grid.get_cell_list_contents([new_position])) != 0:
+                        random_cell_content = self.model.grid.get_cell_list_contents([new_position])
+                        if len(random_cell_content) == 0:
+                            self.model.grid.move_agent(self, new_position)
+                            self.model.movements += 1
+                            return
+                        else:
+                            possible_positions_copy.remove(new_position)
+                            print(len(possible_positions_copy))
+                            if len(possible_positions_copy) == 0:
+                                self.model.grid.move_agent(self, (self.pos[0], self.pos[1]))
+                                return
+                            new_position = self.random.choice(possible_positions_copy)
+                    
+                    # case in which there is a viable position
+                    self.model.grid.move_agent(self, new_position)
+                    self.model.movements += 1
+                    return
+                # if there are no possible positions, return and do nothing
+                self.model.grid.move_agent(self, (self.pos[0], self.pos[1]))
+                return
+                    
+                # If there was a possible position to move, move to it, else stay in the same position
 
     def get_neighboor_box_position(self):
         """Searches its neighborhood for a box and returns its position if it exists
@@ -102,6 +140,14 @@ class Robot(Agent):
 
         # Moves all the robot all the way to the ideal position moving to the left
         elif self.pos[1] == ideal_position[1]:
+            left_cell = self.model.grid.get_cell_list_contents([(self.pos[0] - 1, self.pos[1])])
+            if len(left_cell) != 0:
+                for agent in left_cell:
+                    if isinstance(agent, Robot):
+                        self.model.grid.move_agent(self, (self.pos[0], self.pos[1]))
+                        self.model.movements += 1
+                        return
+
             self.move_with_box(self.pos[0] - 1, self.pos[1])
             return
 
