@@ -399,29 +399,6 @@ class Robot(Agent):
         else:
             self.move_with_box(self.pos[0], self.pos[1])
             return
-        """last_x_position = self.model.get_last_x_position()
-        # Moves all the robot all the way to the right
-        if self.pos[0] < last_x_position and self.pos[1] != ideal_position[1]:
-            self.move_with_box(self.pos[0] + 1, self.pos[1])
-            return
-
-        # Moves all the robot all the way to the y position of the ideal position
-        elif self.pos[1] > ideal_position[1]:
-            self.move_with_box(self.pos[0], self.pos[1] - 1)
-            return
-
-        # Moves all the robot all the way to the ideal position moving to the left
-        elif self.pos[1] == ideal_position[1]:
-            left_cell = self.model.grid.get_cell_list_contents([(self.pos[0] - 1, self.pos[1])])
-            if len(left_cell) != 0:
-                for agent in left_cell:
-                    if isinstance(agent, Robot):
-                        self.model.grid.move_agent(self, (self.pos[0], self.pos[1]))
-                        self.model.movements += 1
-                        return
-
-            self.move_with_box(self.pos[0] - 1, self.pos[1])
-            return"""
 
     def move_with_box(self, x, y):
         """
