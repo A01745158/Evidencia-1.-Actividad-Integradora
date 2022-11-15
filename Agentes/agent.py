@@ -225,13 +225,16 @@ class Robot(Agent):
                         agent.move_random_with_box = True
                         self.move_with_box(self.pos[0], self.pos[1])
                         return
-                # If there is a robot with no box or a box
+                # If there is a robot with no box or a sole box
                 if len(go_to_cell) == 1:
                     for agent in go_to_cell:
+                        # If there is a robot in the way, stay in the same position
                         if isinstance(agent, Robot):
                             self.move_with_box(self.pos[0], self.pos[1])
                             return
+                        # If there is a box in the position to go to
                         if isinstance(agent, Box):
+                            # If there is a box in the way, leave the box if possible in the back and pick up the new box
                             if not self.model.grid.out_of_bounds((self.pos[0] - 1, self.pos[1])):
                                 if len(self.model.grid.get_cell_list_contents([(self.pos[0] - 1, self.pos[1])])) == 0:
                                     self.model.grid.move_agent(self.box, (self.pos[0] - 1, self.pos[1]))
@@ -239,6 +242,7 @@ class Robot(Agent):
                                     self.has_box = False
                                     self.box = None
                                     return
+                            # If there is a box in the way and there is no space to leave the box, move in the y position
                             if not self.model.grid.out_of_bounds((self.pos[0], self.pos[1] + 1)) and (self.pos[0], self.pos[1] + 1) not in self.model.all_stacking_positions and len(self.model.grid.get_cell_list_contents([(self.pos[0], self.pos[1] + 1)])) == 0:
                                 self.move_with_box(self.pos[0], self.pos[1] + 1)
                                 self.model.movements += 1
@@ -255,6 +259,7 @@ class Robot(Agent):
                         self.model.movements += 1
                         return
                         
+            # if there is nothing in the way move to the selected position
             if len(self.model.grid.get_cell_list_contents([(self.pos[0] + 1, self.pos[1])])) == 0:      
                 self.move_with_box(self.pos[0] + 1, self.pos[1])
                 self.model.movements += 1
