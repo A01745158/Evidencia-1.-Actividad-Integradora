@@ -8,7 +8,7 @@ GRID_WIDTH = 15
 GRID_HEIGHT = 15
 
 MAX_STEPS = 10000
-NUMBER_OF_BOXES = 30
+NUMBER_OF_BOXES = 115
 
 def agent_portrayal(agent):
     # if the agent is a robot, return a brown circle
