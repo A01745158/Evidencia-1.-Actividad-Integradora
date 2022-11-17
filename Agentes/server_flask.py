@@ -34,6 +34,14 @@ def initModel():
 
         return jsonify({"message": "Parameters recieved, model initiated."})
 
+# Para obtener si esta corriendo
+@app.route('/getState', methods=['GET'])
+def getState():
+    global randomModel
+
+    if request.method == 'GET':
+        print(randomModel.running)
+        return jsonify({'running': randomModel.running})
 
 # Para obtener agentes
 @app.route('/getAgents', methods=['GET'])
@@ -67,9 +75,12 @@ def getObstacles():
             agents = i[0]
             x = i[1]
             z = i[2]
+
+            y = 0
             for a in agents:
                 if isinstance(a, Box):
-                    carPositions.append({"id": str(a.unique_id), "x": x, "y": 0.3, "z": z})
+                    carPositions.append({"id": str(a.unique_id), "x": x, "y": 0.3 + y, "z": z})
+                    y += 0.6
 
         return jsonify({'positions': carPositions})
 

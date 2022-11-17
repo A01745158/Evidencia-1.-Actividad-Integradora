@@ -36,7 +36,7 @@ class BoxPicking(Model):
         )
         
         for i in range(n_boxes):
-            box = Box(i, self)
+            box = Box(i + 20000, self)
             # move box to random empty position
             empty_coordinates = self.grid.find_empty()
             self.grid.place_agent(box, empty_coordinates)
@@ -46,7 +46,7 @@ class BoxPicking(Model):
             self.box_agents.append(box)
 
         for i in range(5):
-            robot = Robot(i + 1000, self)
+            robot = Robot(i + 10000, self)
             self.schedule.add(robot)
             # Get the coordinates for an empty cell
             empty_coordinates = self.grid.find_empty()

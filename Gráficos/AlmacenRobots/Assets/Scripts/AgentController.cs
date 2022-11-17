@@ -39,6 +39,7 @@ public class AgentController : MonoBehaviour
     // Endpoints (que coincidan nombres)
     string getAgentsEndpoint = "/getAgents";
     string getObstaclesEndpoint = "/getObstacles";
+    string getStateEndpoint = "/getState";
     string sendConfigEndpoint = "/init";
     string updateEndpoint = "/update";
     AgentsData agentsData, obstacleData;
@@ -99,7 +100,12 @@ public class AgentController : MonoBehaviour
                 Vector3 direction = currentPosition - interpolated;
 
                 agents[agent.Key].transform.localPosition = interpolated;
-                if (direction != Vector3.zero) agents[agent.Key].transform.rotation = Quaternion.LookRotation(direction);
+
+                if (agent.Key[0] == '1')
+                {
+                    if (direction != Vector3.zero) agents[agent.Key].transform.rotation = Quaternion.LookRotation(direction);
+                }
+                
             }
             // Interpolación
             // float t = (timer / timeToUpdate);
@@ -121,6 +127,7 @@ public class AgentController : MonoBehaviour
 
         }
     }
+
     // Configuración inicial se pone en el editor de unity y se manda a flask
     IEnumerator SendConfiguration()
     {
@@ -154,6 +161,8 @@ public class AgentController : MonoBehaviour
 
         }
     }
+
+
 
     IEnumerator GetAgentsData()
     {   //obtener nuevas posiciones de los agentes
@@ -229,6 +238,23 @@ public class AgentController : MonoBehaviour
             }
             update_b = true;
             if (!started_b) started_b = true;
+        }
+    }
+
+    IEnumerable GetState()
+    {
+        // Posiciones de los agentes obstáculos
+        UnityWebRequest www = UnityWebRequest.Get(serverUrl + getStateEndpoint);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+            Debug.Log(www.error);
+        else
+        {
+            obstacleData = JsonUtility.FromJson<AgentsData>(www.downloadHandler.text);
+
+            Debug.Log(obstacleData.positions);
+            Debug.Log(www.downloadHandler.text);
         }
     }
 }
