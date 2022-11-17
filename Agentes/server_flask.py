@@ -15,7 +15,7 @@ app = Flask("Robot-box example")
 
 @app.route('/init', methods=['POST', 'GET'])
 def initModel():
-    global currentStep, randomModel, width, height, NUMBER_OF_BOXES
+    global currentStep, randomModel, width, height, NUMBER_OF_BOXES, max_steps
 
     # Datos que estamos mandando
     if request.method == 'POST':
@@ -55,9 +55,15 @@ def getObstacles():
 
     if request.method == 'GET':
         # List comprehension
-        carPositions = [{"id": str(a.unique_id), "x": x, "y": 1, "z": z} for (
-            a, x, z) in randomModel.grid.coord_iter()
-            if isinstance(a, Box)]
+        print(list(randomModel.grid.coord_iter()))
+        carPositions = []
+        for i in list(randomModel.grid.coord_iter()):
+            agents = i[0]
+            x = i[1]
+            z = i[2]
+            for a in agents:
+                if isinstance(a, Box):
+                    carPositions.append({"id": str(a.unique_id), "x": x, "y": 0.3, "z": z})
 
         return jsonify({'positions': carPositions})
 

@@ -49,7 +49,7 @@ public class AgentController : MonoBehaviour
 
     // Una celda es una unidad de Unity
     public GameObject agentPrefab, obstaclePrefab, floor;
-    public int NBoxes, width, height;
+    public int NBoxes, width, height, max_steps;
     public float timeToUpdate = 5.0f;
     private float timer, dt;
 
@@ -127,6 +127,7 @@ public class AgentController : MonoBehaviour
         form.AddField("NBoxes", NBoxes.ToString());
         form.AddField("width", width.ToString());
         form.AddField("height", height.ToString());
+        form.AddField("MaxSteps", max_steps.ToString());
 
         // Se manda un post
         UnityWebRequest www = UnityWebRequest.Post(serverUrl + sendConfigEndpoint, form);
@@ -199,6 +200,7 @@ public class AgentController : MonoBehaviour
             obstacleData = JsonUtility.FromJson<AgentsData>(www.downloadHandler.text);
 
             Debug.Log(obstacleData.positions);
+            Debug.Log(www.downloadHandler.text);
 
             foreach (AgentData obstacle in obstacleData.positions)
             {
