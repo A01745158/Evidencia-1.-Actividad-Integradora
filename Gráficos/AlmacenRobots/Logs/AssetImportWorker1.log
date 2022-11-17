@@ -176,3 +176,21 @@ Received Import Request.
   path: Assets/CrowArt - PBR Cardboard Box/Prefabs/CarboardBox_1.prefab
   artifactKey: Guid(c350023b68bece943928351ad0df5c3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/CrowArt - PBR Cardboard Box/Prefabs/CarboardBox_1.prefab using Guid(c350023b68bece943928351ad0df5c3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f9f4fe3b1905d2ccb223984151ab34c') in 1.051675 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3108.448813 seconds.
+  path: Assets/Metal Floor (Rust Low)/Metal_floor_diffuse.png
+  artifactKey: Guid(06300052bf5d17e46849ec7b7e85adb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Metal Floor (Rust Low)/Metal_floor_diffuse.png using Guid(06300052bf5d17e46849ec7b7e85adb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92596632cb8d5fd728e63b0b4623dd60') in 0.727052 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/Metal Floor (Rust Low)/Metal_floor_normal.png
+  artifactKey: Guid(775104e3a8e0be848a41f8c866ffc479) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Metal Floor (Rust Low)/Metal_floor_normal.png using Guid(775104e3a8e0be848a41f8c866ffc479) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e94f98a28e5ffbee67fda01d0163af4') in 0.044446 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Metal Floor (Rust Low)/Metal_floor_height.png
+  artifactKey: Guid(9c9d06d3e1d5f644ebf1028bd070cde1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Metal Floor (Rust Low)/Metal_floor_height.png using Guid(9c9d06d3e1d5f644ebf1028bd070cde1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c42bd4fae16f254a1a3989dc0c7bfab7') in 0.034193 seconds 
