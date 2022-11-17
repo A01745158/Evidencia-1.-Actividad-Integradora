@@ -1,34 +1,77 @@
 from flask import Flask, request, jsonify
+from model import *
 from agent import *
-from server import *
 
 # Size of the board:
-number_agents = 5
-width = 28
-height = 28
+NUMBER_OF_BOXES = 115
+width = 15
+height = 15
 randomModel = None
 currentStep = 0
+max_steps = 5000
 
 app = Flask("Robot-box example")
 
 
 @app.route('/init', methods=['POST', 'GET'])
 def initModel():
-    global currentStep, randomModel, number_agents, width, height
+    global currentStep, randomModel, width, height, NUMBER_OF_BOXES
 
     # Datos que estamos mandando
     if request.method == 'POST':
-        number_agents = int(request.form.get('NAgents'))
         width = int(request.form.get('width'))
         height = int(request.form.get('height'))
+        NUMBER_OF_BOXES = int(request.form.get('NBoxes'))
+        # PReguntar max steps
+        max_steps = int(request.form.get('MaxSteps'))
         currentStep = 0
 
         print(request.form)
-        print(number_agents, width, height)
+        print(width, height, NUMBER_OF_BOXES, max_steps)
         # Aquí se crea el modelo
-        randomModel = RandomModel(number_agents, width, height)
+        randomModel = BoxPicking(width, height, NUMBER_OF_BOXES, max_steps)
 
         return jsonify({"message": "Parameters recieved, model initiated."})
+
+
 # Para obtener agentes
+@app.route('/getAgents', methods=['GET'])
+def getAgents():
+    global randomModel
+
+    if request.method == 'GET':
+        # List comprehension
+        agentPositions = [{"id": str(a.unique_id), "x": x, "y": 1, "z": z} for
+                          (a, x, z) in randomModel.grid.coord_iter()
+                          if isinstance(a, Robot)]
+
+        return jsonify({'positions': agentPositions})
+
+
+# Para obtener obstáculos
+@app.route('/getObstacles', methods=['GET'])
+def getObstacles():
+    global randomModel
+
+    if request.method == 'GET':
+        # List comprehension
+        carPositions = [{"id": str(a.unique_id), "x": x, "y": 1, "z": z} for (
+            a, x, z) in randomModel.grid.coord_iter()
+            if isinstance(a, Box)]
+
+        return jsonify({'positions': carPositions})
+
+
+# Se encarga de hacerle el update al modelo, puede ser muy tardado
+@app.route('/update', methods=['GET'])
+def updateModel():
+    global currentStep, randomModel
+    if request.method == 'GET':
+        randomModel.step()
+        currentStep += 1
+        return jsonify({'message': f'Model updated to step {currentStep}.',
+                        'currentStep': currentStep})
+
+
 if __name__ == '__main__':
     app.run(host="localhost", port=8585, debug=True)
