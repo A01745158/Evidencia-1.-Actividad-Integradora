@@ -45,7 +45,9 @@ public class AgentController : MonoBehaviour
     Dictionary<string, GameObject> agents;
     Dictionary<string, Vector3> prevPositions, currPositions;
 
-    bool updated = false, started = false;
+    bool update_a = false, started_a = false;
+    bool update_b = false, started_b = false;
+
 
     // Una celda es una unidad de Unity
     public GameObject agentPrefab, obstaclePrefab, floor;
@@ -78,11 +80,11 @@ public class AgentController : MonoBehaviour
         if (timer < 0)
         {
             timer = timeToUpdate;
-            updated = false;
+            update_a = false;
             StartCoroutine(UpdateSimulation());
         }
         // Si ya actualicé posiciones de mis agentes
-        if (updated)
+        if (update_a && update_b)
         {
             timer -= Time.deltaTime;
             dt = 1.0f - (timer / timeToUpdate);
@@ -115,6 +117,8 @@ public class AgentController : MonoBehaviour
         else
         {
             StartCoroutine(GetAgentsData());
+            StartCoroutine(GetObstacleData());
+
         }
     }
     // Configuración inicial se pone en el editor de unity y se manda a flask
@@ -147,6 +151,7 @@ public class AgentController : MonoBehaviour
             Debug.Log("Getting Agents positions");
             StartCoroutine(GetAgentsData());
             StartCoroutine(GetObstacleData());
+
         }
     }
 
@@ -167,7 +172,7 @@ public class AgentController : MonoBehaviour
             {
                 Vector3 newAgentPosition = new Vector3(agent.x, agent.y, agent.z);
 
-                if (!started)
+                if (!started_a)
                 {   // si es la primera vez que se ejecuta
                     prevPositions[agent.id] = newAgentPosition;
                     //guarda referencia al agente nuevo en la posicion inicial 
@@ -182,8 +187,8 @@ public class AgentController : MonoBehaviour
                 }
             }
 
-            updated = true;
-            if (!started) started = true;
+            update_a = true;
+            if (!started_a) started_a = true;
         }
     }
 
@@ -205,8 +210,25 @@ public class AgentController : MonoBehaviour
             foreach (AgentData obstacle in obstacleData.positions)
             {
                 // Crear los prefabs. Agregar objetos nuevos a Unity
-                Instantiate(obstaclePrefab, new Vector3(obstacle.x, obstacle.y, obstacle.z), Quaternion.identity);
+
+                Vector3 newAgentPosition = new Vector3(obstacle.x, obstacle.y, obstacle.z);
+
+                if (!started_b)
+                {   // si es la primera vez que se ejecuta
+                    prevPositions[obstacle.id] = newAgentPosition;
+                    //guarda referencia al agente nuevo en la posicion inicial 
+                    agents[obstacle.id] = Instantiate(obstaclePrefab, new Vector3(obstacle.x, obstacle.y, obstacle.z), Quaternion.identity);
+                }
+                else
+                {   // no es la 1ª vez
+                    Vector3 currentPosition = new Vector3();
+                    if (currPositions.TryGetValue(obstacle.id, out currentPosition))
+                        prevPositions[obstacle.id] = currentPosition;
+                    currPositions[obstacle.id] = newAgentPosition;
+                }
             }
+            update_b = true;
+            if (!started_b) started_b = true;
         }
     }
 }

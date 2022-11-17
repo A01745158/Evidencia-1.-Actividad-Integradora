@@ -46,7 +46,7 @@ class BoxPicking(Model):
             self.box_agents.append(box)
 
         for i in range(5):
-            robot = Robot(i, self)
+            robot = Robot(i + 1000, self)
             self.schedule.add(robot)
             # Get the coordinates for an empty cell
             empty_coordinates = self.grid.find_empty()

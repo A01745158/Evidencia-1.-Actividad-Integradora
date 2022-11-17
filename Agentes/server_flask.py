@@ -9,6 +9,7 @@ height = 15
 randomModel = None
 currentStep = 0
 max_steps = 5000
+running = True
 
 app = Flask("Robot-box example")
 
@@ -41,11 +42,16 @@ def getAgents():
 
     if request.method == 'GET':
         # List comprehension
-        agentPositions = [{"id": str(a.unique_id), "x": x, "y": 1, "z": z} for
-                          (a, x, z) in randomModel.grid.coord_iter()
-                          if isinstance(a, Robot)]
+        agentsPositions = []
+        for i in list(randomModel.grid.coord_iter()):
+            agents = i[0]
+            x = i[1]
+            z = i[2]
+            for a in agents:
+                if isinstance(a, Robot):
+                    agentsPositions.append({"id": str(a.unique_id), "x": x, "y": .3, "z": z})
 
-        return jsonify({'positions': agentPositions})
+        return jsonify({'positions': agentsPositions})
 
 
 # Para obtener obstáculos
