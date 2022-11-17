@@ -57,7 +57,7 @@ def getAgents():
             z = i[2]
             for a in agents:
                 if isinstance(a, Robot):
-                    agentsPositions.append({"id": str(a.unique_id), "x": x, "y": .3, "z": z})
+                    agentsPositions.append({"id": str(a.unique_id), "x": x, "y": .4, "z": z})
 
         return jsonify({'positions': agentsPositions})
 

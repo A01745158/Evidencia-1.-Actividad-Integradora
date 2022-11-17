@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c054eff3c9054cf7b378fccb67bf061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentPrefab: {fileID: 8516539941805374705, guid: a8cf860427b3f2e49a7c593a86cd268f, type: 3}
+  agentPrefab: {fileID: 4601954790923136561, guid: b358663a6bc8244639156ea01b700ba1, type: 3}
   obstaclePrefab: {fileID: 1192641458597302, guid: c350023b68bece943928351ad0df5c3a, type: 3}
   floor: {fileID: 1472416097}
   NBoxes: 115
