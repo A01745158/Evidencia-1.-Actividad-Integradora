@@ -27,8 +27,6 @@ def initModel():
         max_steps = int(request.form.get('MaxSteps'))
         currentStep = 0
 
-        print(request.form)
-        print(width, height, NUMBER_OF_BOXES, max_steps)
         # Aquí se crea el modelo
         randomModel = BoxPicking(width, height, NUMBER_OF_BOXES, max_steps)
 
@@ -42,7 +40,7 @@ def getState():
     global randomModel
 
     if request.method == 'GET':
-        print(randomModel.running)
+
         return jsonify({'running': randomModel.running})
 
 # Para obtener agentes
@@ -78,7 +76,7 @@ def getObstacles():
 
     if request.method == 'GET':
         # List comprehension
-        print(list(randomModel.grid.coord_iter()))
+
         carPositions = []
         for i in list(randomModel.grid.coord_iter()):
             agents = i[0]

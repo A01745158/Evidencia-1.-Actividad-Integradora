@@ -111,5 +111,6 @@ class BoxPicking(Model):
         """
         Prints the data of the model
         """
-        print("Number of steps to finalization: " + str(self.schedule.steps))
+        print("Number of steps (time) to finalization: " +
+              str(self.schedule.steps))
         print("Number of movements across all agents: " + str(self.movements))
