@@ -4,6 +4,7 @@ from mesa.datacollection import DataCollector
 from mesa.time import RandomActivation
 from agent import Robot, Box
 
+
 class BoxPicking(Model):
     def __init__(self, width, height, n_boxes, max_steps):
         """
@@ -34,7 +35,7 @@ class BoxPicking(Model):
                 "movements": BoxPicking.get_movements
             }
         )
-        
+
         for i in range(n_boxes):
             box = Box(i + 20000, self)
             # move box to random empty position
@@ -62,7 +63,7 @@ class BoxPicking(Model):
 
     def step(self):
         self.schedule.step()
-        if self.get_number_of_placed_boxes() == self.number_of_boxes or self.schedule.steps == self.max_steps - 1:
+        if (self.get_number_of_placed_boxes() == self.number_of_boxes or self.schedule.steps == self.max_steps - 1):
             self.running = False
             self.print_data()
 
