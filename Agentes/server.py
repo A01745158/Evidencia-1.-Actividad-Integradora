@@ -21,10 +21,12 @@ def agent_portrayal(agent):
                      "Layer": 1,
                      "text": agent.unique_id,
                      "text_color": "white"}
-            
+
     elif isinstance(agent, Box):
-        # if the agent is a box, placed correctly and its stack size is 5, return a blue rectangle
-        if agent.is_placed_correctly and agent.get_number_of_boxes_in_stack() == 5:
+        # if the agent is a box, placed correctly and its stack size is 5, 
+        # return a blue rectangle
+        if agent.is_placed_correctly and agent.get_number_of_boxes_in_stack() \
+                == 5:
             portrayal = {"Shape": "rect",
                          "Filled": "true",
                          "Color": "rgb(0, 255, 0)",
@@ -33,8 +35,10 @@ def agent_portrayal(agent):
                          "Layer": 0,
                          "text": agent.get_number_of_boxes_in_stack(),
                          "text_color": "black"}
-        # if the agent is a box, placed correctly and its stack size is less than 5, return a yellow rectangle
-        elif agent.is_placed_correctly and agent.get_number_of_boxes_in_stack() < 5:
+        # if the agent is a box, placed correctly and its stack size is 
+        # less than 5, return a yellow rectangle
+        elif agent.is_placed_correctly and \
+                agent.get_number_of_boxes_in_stack() < 5:
             portrayal = {"Shape": "rect",
                          "Filled": "true",
                          "Color": "rgb(255, 255, 0)",
@@ -43,15 +47,17 @@ def agent_portrayal(agent):
                          "Layer": 0,
                          "text": agent.get_number_of_boxes_in_stack(),
                          "text_color": "black"}
-        # if the agent is a box and picked up by a robot, return a yellow-ish smaller rectangle
+        # if the agent is a box and picked up by a robot, 
+        # return a yellow-ish smaller rectangle
         elif agent.is_picked:
             portrayal = {"Shape": "rect",
-                    "Filled": "true",
-                    "Color": "rgb(223, 190, 44)",
-                    "w": 0.6,
-                    "h": 0.6,
-                    "Layer": 0}
-        # if the agent is not picked up, not placed correctly and its stack size is less than 5, return a red rectangle
+                         "Filled": "true",
+                         "Color": "rgb(223, 190, 44)",
+                         "w": 0.6,
+                         "h": 0.6,
+                         "Layer": 0}
+        # if the agent is not picked up, not placed correctly 
+        # and its stack size is less than 5, return a red rectangle
         else:
             portrayal = {"Shape": "rect",
                          "Filled": "true",
@@ -66,9 +72,10 @@ def agent_portrayal(agent):
 grid = CanvasGrid(agent_portrayal, GRID_WIDTH, GRID_HEIGHT, 500, 500)
 
 server = ModularServer(BoxPicking,
-                          [grid],
-                            "Box Picking",
-                            {"n_boxes": NUMBER_OF_BOXES, "width": GRID_WIDTH, "height": GRID_HEIGHT, "max_steps": MAX_STEPS})
+                       [grid],
+                       "Box Picking",
+                       {"n_boxes": NUMBER_OF_BOXES, "width": GRID_WIDTH,
+                        "height": GRID_HEIGHT, "max_steps": MAX_STEPS})
 
-server.port = 8521 # The default
+server.port = 8521  # The default
 server.launch()

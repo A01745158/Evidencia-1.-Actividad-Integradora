@@ -8,7 +8,8 @@ from agent import Robot, Box
 class BoxPicking(Model):
     def __init__(self, width, height, n_boxes, max_steps):
         """
-        Create a new BoxPicking model, where it will include Robot agents and Box agents.
+        Create a new BoxPicking model, where it will include Robot agents 
+        and Box agents.
 
         Args:
             width (int): the width of the multigrid
@@ -41,8 +42,10 @@ class BoxPicking(Model):
             # move box to random empty position
             empty_coordinates = self.grid.find_empty()
             self.grid.place_agent(box, empty_coordinates)
-            # if the position where the box is placed is the ideal position, set the instance variable to True
-            if box.pos[0] == self.ideal_position[0] and box.pos[1] == self.ideal_position[1]:
+            # if the position where the box is placed is the ideal position, s
+            # et the instance variable to True
+            if box.pos[0] == self.ideal_position[0] and box.pos[1] \
+                    == self.ideal_position[1]:
                 box.is_placed_correctly = True
             self.box_agents.append(box)
 
@@ -52,18 +55,21 @@ class BoxPicking(Model):
             # Get the coordinates for an empty cell
             empty_coordinates = self.grid.find_empty()
             # If there are no more empty cells, stop adding robots
-            if empty_coordinates == None:
+            if empty_coordinates is None:
                 break
-            # while the coordinates for the empty position are the ideal position, get another random empty position
-            while empty_coordinates[0] == self.ideal_position[0] and empty_coordinates[1] == self.ideal_position[1]:
+            # while the coordinates for the empty position are the ideal 
+            # position, get another random empty position 
+            while empty_coordinates[0] == self.ideal_position[0] and \
+                    empty_coordinates[1] == self.ideal_position[1]:
                 empty_coordinates = self.grid.find_empty()
-                if empty_coordinates == None:
+                if empty_coordinates is None:
                     break
             self.grid.place_agent(robot, empty_coordinates)
 
     def step(self):
         self.schedule.step()
-        if (self.get_number_of_placed_boxes() == self.number_of_boxes or self.schedule.steps == self.max_steps - 1):
+        if (self.get_number_of_placed_boxes() == self.number_of_boxes or 
+                self.schedule.steps == self.max_steps - 1):
             self.running = False
             self.print_data()
 
