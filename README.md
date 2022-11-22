@@ -2,8 +2,11 @@
 ### Modelación de sistemas multiagentes con gráficas computacionales (Gpo 301)
 Cumplimos con las especificaciones del documento que se encuentra en [el siguiente link](https://experiencia21.tec.mx/courses/312265/assignments/9772518).
 
-## Indice
-[PDF de la Evidencia 1. Actividad Integradora](#Evidencia-1.-Actividad-Integradora)
+## Índice
+[PDF de la Evidencia 1. Actividad Integradora](/Evidencia-1.-Actividad-Integradora.pdf).
+[Carpeta que contiene el trabajo de Unity](/Gráficos).
+[Carpeta que contiene todos los archivos .py de Agentes](/Agentes).
+
 ## Autores
 
 - Erika García [@A01745158](https://github.com/A01745158)
