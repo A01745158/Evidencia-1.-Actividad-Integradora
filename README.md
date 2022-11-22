@@ -3,9 +3,9 @@
 Cumplimos con las especificaciones del documento que se encuentra en [el siguiente link](https://experiencia21.tec.mx/courses/312265/assignments/9772518).
 
 ## Índice
-- [PDF de la Evidencia 1. Actividad Integradora](/Evidencia-1.-Actividad-Integradora.pdf).
-- [Carpeta que contiene el trabajo de Unity](/Gráficos).
-- [Carpeta que contiene todos los archivos .py de Agentes](/Agentes).
+-[PDF de la Evidencia 1. Actividad Integradora](/Evidencia 1. Actividad integradora.pdf).
+-[Carpeta que contiene el trabajo de Unity](/Gráficos/AlmacenRobots).
+-[Carpeta que contiene todos los archivos .py de Agentes](/Agentes).
 
 ## Autores
 
